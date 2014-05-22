@@ -18,11 +18,7 @@
 
 	<div class="col-xs-12 col-md-10" id="page">
 		<?php echo message(); ?>
-		<?php
-			$errors = $_SESSION["errors"];
-			echo form_errors($errors);
-		?>
-
+		<?php echo errors(); ?>
 		<?php if ($current_subject) { ?>
 			<h2>Manage Subject</h2>
 			<p><strong>Menu name: </strong><?php echo htmlentities($current_subject["menu_name"]); ?></p>
