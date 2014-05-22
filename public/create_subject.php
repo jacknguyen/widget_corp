@@ -32,7 +32,7 @@
 			redirect_to("manage_content.php");
 		} else {
 			$_SESSION["message"] = "Subject creation failed";
-			redirect_to("admin.php");
+			redirect_to("manage_content.php");
 		}
 	} else {
 		redirect_to("new_subject.php");

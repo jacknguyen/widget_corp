@@ -125,6 +125,16 @@
 		return $subject_count["COUNT(*)"];
 	}
 
+	function page_count($subject_id) {
+		global $connection;
+		$query = "SELECT COUNT(*) FROM pages WHERE subject_id={$subject_id}";
+		$result = mysqli_query($connection, $query);
+		confirm_query($result);
+		$page_count = mysqli_fetch_assoc($result);
+		mysqli_free_result($result);
+		return $page_count["COUNT(*)"];
+	}
+
 	function redirect_to($new_location) {
 		header("Location: " . $new_location);
 		exit;
@@ -140,9 +150,11 @@
 		$output = "";
 		if (!empty($errors)) {
 			foreach ($errors as $key => $error) {
-				$output .= "{htmlentities($error)}<br>";
+				$output .= htmlentities($error);
+				$output .= "<br>";
 			}
 		}
+		$_SESSION["errors"] = null;
 		return $output;
 	}
 ?>

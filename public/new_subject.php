@@ -15,7 +15,7 @@
 
 	<div class="col-xs-12 col-md-10" id="page">
 		<?php
-			$errors = errors();
+			$errors = $_SESSION["errors"];
 			echo form_errors($errors);
 		?>
 		<h2>Create Subject</h2>

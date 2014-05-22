@@ -18,7 +18,10 @@
 
 	<div class="col-xs-12 col-md-10" id="page">
 		<?php echo message(); ?>
-		<?php echo errors(); ?>
+		<?php
+			$errors = $_SESSION["errors"];
+			echo form_errors($errors);
+		?>
 
 		<?php if ($current_subject) { ?>
 			<h2>Manage Subject</h2>
@@ -49,7 +52,7 @@
 						</ul>
 					</div>
 				</div>
-				<a href="new_page.php?subject=<?php echo urlencode($current_subject["id"]); ?>" class="btn btn-primary">Add A New Page</a>
+				<a href="new_page.php" class="btn btn-primary" onclick="<?php $_SESSION["subject_id"] = $current_subject["id"]; ?>">Add A New Page</a>
 			</div>
 		<?php } elseif ($current_page) { ?>
 			<h2>Manage Page</h2>
