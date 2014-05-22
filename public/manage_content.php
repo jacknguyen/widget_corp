@@ -60,9 +60,10 @@
 			<p><strong>Position: </strong><?php echo htmlentities($current_page["position"]); ?></p>
 			<p><strong>Visible: </strong><?php echo htmlentities($current_page["visible"] == 1 ? "Yes" : "No"); ?></p>
 			<p><strong>Content: </strong></p>
-			<div class="col-md-6">
-				<p class="bg-info"><?php echo htmlentities($current_page["content"]); ?></p>
-			</div>
+			<p class="bg-info"><?php echo htmlentities($current_page["content"]); ?></p>
+
+			<a href="edit_page.php?page=<?php echo urlencode($current_page["id"]); ?>" class="btn btn-primary">Edit Page</a>
+			<a href="delete_page.php?page=<?php echo urlencode($current_page["id"]); ?>" class="btn btn-danger" onclick="return confirm('Are you sure?')">Delete Page</a>
 		<?php } else { ?>
 			<?php if(!isset($_SESSION["message"]) || !isset($_SESSION["errors"])) { ?>
 				<br>
