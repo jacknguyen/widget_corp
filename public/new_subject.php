@@ -5,6 +5,7 @@
 	require_once('../inc/functions.php');
 ?>
 
+<?php $is_public = false; ?>
 <?php include('../inc/layouts/header.php'); ?>
 <?php find_selected(); ?>
 

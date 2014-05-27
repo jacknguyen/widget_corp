@@ -22,7 +22,7 @@
 			$id = $current_page["id"];
 			$menu_name = mysql_prep($_POST["menu_name"]);
 			$position = (int) $_POST["position"];
-			$visible = (bool) $_POST["visible"];
+			$visible = (int) $_POST["visible"];
 			$content = mysql_prep($_POST["content"]);
 
 			// query sent to mysql
@@ -49,11 +49,12 @@
 	}
 ?>
 
+<?php $is_public = false; ?>
 <?php include('../inc/layouts/header.php'); ?>
 
 <div class="container-fluid" id="main">
 	<div id="navigation" class="col-xs-12 col-md-2">
-		<?php echo navigation($current_subject, $current_page); ?>
+		<?php echo navigation($current_subject, $current_page, false); ?>
 	</div>
 
 	<div class="col-xs-12 col-md-10" id="page">
@@ -96,7 +97,7 @@
 			<p><strong>Content:</strong></p>
 			<p><textarea name="content" rows="10" cols="50"><?php echo htmlentities($current_page['content']); ?></textarea></p>
 
-			<input type="submit" name="submit" value="Edit Page">
+			<input type="submit" name="submit" value="Save">
 		</form>
 		<br>
 		<a href="manage_content.php?page=<?php echo urlencode($current_page["id"]); ?>">Cancel</a>

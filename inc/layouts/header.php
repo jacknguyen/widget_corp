@@ -1,3 +1,4 @@
+<?php if(!isset($is_public)) { $is_public = true;} ?>
 <!DOCTYPE html>
 <html lang=en>
 <head>
@@ -20,7 +21,10 @@
 	<div id="header" class="navbar navbar-inverse" role="header">
 		<div class="container-fluid">
 			<div class="navbar-header">
-				<a href="admin" class="navbar-brand">Widget Corp</a>
+				<a href="index" class="navbar-brand">Widget Corp <?php if (($is_public == false)) { echo "Admin"; } ?></a>
 			</div>
+			<ul class="nav navbar-nav navbar-right">
+				<li><a href='admin'>Admin</a></li>
+			</ul>
 		</div>
 	</div>

@@ -5,12 +5,13 @@
 	require_once('../inc/functions.php');
 ?>
 
+<?php $is_public = false; ?>
 <?php include('../inc/layouts/header.php'); ?>
 <?php find_selected(); ?>
 
 <div class="container-fluid" id="main">
 	<div id="navigation" class="col-xs-12 col-md-2">
-		<?php echo navigation($current_subject, $current_page); ?>
+		<?php echo navigation($current_subject, $current_page, false); ?>
 		<br>
 		<a href="new_subject.php" class="btn btn-primary btn-block">Add A New Subject</a>
 
@@ -33,7 +34,7 @@
 					<div class="col-md-3">
 						<ul class="nav nav-pills nav-stacked">
 							<?php
-								$page_set = find_pages_for_subjects($current_subject["id"]);
+								$page_set = find_pages_for_subjects($current_subject["id"], false);
 								while ($page = mysqli_fetch_assoc($page_set)) {
 									$result = "<li><a href=\"";
 									$result .= $_SERVER["PHP_SELF"];
@@ -48,7 +49,7 @@
 						</ul>
 					</div>
 				</div>
-				<a href="new_page.php" class="btn btn-primary" onclick="<?php $_SESSION["subject_id"] = $current_subject["id"]; ?>">Add A New Page</a>
+				<a href="new_page.php" class="btn btn-primary" onclick="<?php $_SESSION['subject_id'] = $current_subject['id']; ?>">Add A New Page</a>
 			</div>
 		<?php } elseif ($current_page) { ?>
 			<h2>Manage Page</h2>
@@ -56,7 +57,7 @@
 			<p><strong>Position: </strong><?php echo htmlentities($current_page["position"]); ?></p>
 			<p><strong>Visible: </strong><?php echo htmlentities($current_page["visible"] == 1 ? "Yes" : "No"); ?></p>
 			<p><strong>Content: </strong></p>
-			<p class="bg-info"><?php echo htmlentities($current_page["content"]); ?></p>
+			<p class="bg-info"><?php echo nl2br(htmlentities($current_page["content"])); ?></p>
 
 			<a href="edit_page.php?page=<?php echo urlencode($current_page["id"]); ?>" class="btn btn-primary">Edit Page</a>
 			<a href="delete_page.php?page=<?php echo urlencode($current_page["id"]); ?>" class="btn btn-danger" onclick="return confirm('Are you sure?')">Delete Page</a>

@@ -6,6 +6,7 @@
 	require_once('../inc/validation_functions.php');
 ?>
 
+<?php $is_public = false; ?>
 <?php include('../inc/layouts/header.php'); ?>
 <?php find_selected(); ?>
 
@@ -14,7 +15,7 @@
 		$subject_id = (int) $_SESSION["subject_id"];
 		$menu_name = mysql_prep($_POST["menu_name"]);
 		$position = (int) $_POST["position"];
-		$visible = (bool) $_POST["visible"];
+		$visible = (int) $_POST["visible"];
 		$content = mysql_prep($_POST["content"]);
 
 		// validations
@@ -26,7 +27,7 @@
 
 		if(!empty($errors)) {
 			$_SESSION["errors"] = $errors;
-			redirect_to($_SERVER["PHP_SELF"]);
+			redirect_to ($_SERVER["PHP_SELF"]);
 		}
 
 		// query sent to mysql
@@ -38,35 +39,35 @@
 			$_SESSION["subject_id"] = null;
 			redirect_to("manage_content.php");
 		} else {
-			$errors[] = "Subject creation failed";
+			$_SESSION['message'] = "Subject creation failed";
 		}
-	} else {
-
 	}
 ?>
 
 <div class="container-fluid" id="main">
 	<div id="navigation" class="col-xs-12 col-md-2">
-		<?php echo navigation($current_subject, $current_page); ?>
+		<?php echo navigation($current_subject, $current_page, false); ?>
 	</div>
 
 	<div class="col-xs-12 col-md-10" id="page">
+		<?php echo message(); ?>
 		<?php
-			$errors = $_SESSION["errors"];
+			$errors = $_SESSION['errors'];
 			echo form_errors($errors);
 		?>
 		<h2>Create Page</h2>
+
 		<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
-			<input type="number" name="subject_id" value="<?php echo htmlentities($_SESSION["subject_id"]); ?>" hidden>
+			<input type='number' name='subject_id' value='<?php echo htmlentities($_SESSION["subject_id"]); ?>' hidden>
 			<p><strong>Menu name:</strong>
-				<input type="text" name="menu_name" autofocus="true">
+				<input type='text' name='menu_name' autofocus='true'>
 			</p>
 			<p><strong>Position:</strong>
 				<select name="position">
 					<?php
 						$page_count = page_count($_SESSION["subject_id"]);
 						for($count=1; $count <= ($page_count + 1); $count++) {
-							echo "<option value=\"$count\" selected=\"\">{$count}</option>";
+							echo "<option value='$count' selected>{$count}</option>";
 						}
 					?>
 				</select>
@@ -75,16 +76,16 @@
 				<input type="radio" name="visible" value="0"> No &nbsp;
 				<input type="radio" name="visible" value="1"> Yes &nbsp;
 			</p>
-			<p><strong>Content:</strong></p>
-			<p>
+			<p><strong>Content:</strong><br>
 				<textarea name="content" rows="10" cols="50"></textarea>
 			</p>
 
 
 			<input type="submit" name="submit" value="Create Page">
 		</form>
+
 		<br>
-		<a href="manage_content.php">Cancel</a>
+		<a href="manage_content.php?subject=<?php echo urlencode($_SESSION['subject_id']); ?>">Cancel</a>
 	</div>
 </div>
 

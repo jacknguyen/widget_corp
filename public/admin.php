@@ -1,5 +1,6 @@
 <?php
 	$page_title = "Admin";
+	$is_public = false;
 	require_once('../inc/functions.php');
 	include('../inc/layouts/header.php');
 ?>

@@ -22,7 +22,7 @@
 			$id = $current_subject["id"];
 			$menu_name = mysql_prep($_POST["menu_name"]);
 			$position = (int) $_POST["position"];
-			$visible = (bool) $_POST["visible"];
+			$visible = (int) $_POST["visible"];
 
 			// query sent to mysql
 			$query = "UPDATE subjects SET menu_name='{$menu_name}', position={$position}, visible={$visible} WHERE id={$id} LIMIT 1";
@@ -30,7 +30,7 @@
 
 			if ($result && mysqli_affected_rows($connection) >= 0) {
 				$_SESSION["message"] = "Subject successfully updated.";
-				redirect_to("manage_content.php");
+				redirect_to("manage_content.php?subject={$id}");
 			} else {
 				$message = "Subject update failed";
 			}
@@ -47,12 +47,12 @@
 		redirect_to("manage_content.php");
 	}
 ?>
-
+<?php $is_public = false; ?>
 <?php include('../inc/layouts/header.php'); ?>
 
 <div class="container-fluid" id="main">
 	<div id="navigation" class="col-xs-12 col-md-2">
-		<?php echo navigation($current_subject, $current_page); ?>
+		<?php echo navigation($current_subject, $current_page, false); ?>
 	</div>
 
 	<div class="col-xs-12 col-md-10" id="page">
@@ -92,10 +92,10 @@
 					<?php if($current_subject["visible"] == 1) { echo "checked"; }?>
 					> Yes &nbsp;
 			</p>
-			<input type="submit" name="submit" value="Edit Subject">
+			<input type="submit" name="submit" value="Save">
 		</form>
 		<br>
-		<a href="manage_content.php">Cancel</a>
+		<a href="manage_content.php?subject=<?php echo $current_subject['id']; ?>">Cancel</a>
 	</div>
 </div>
 
