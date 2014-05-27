@@ -12,8 +12,8 @@
 		<div class="col-xs-9 col-md-3">
 			<ul class="nav nav-pills nav-stacked">
 				<li><a href="manage_content">Manage Website Content</a></li>
-				<li><a href="manage_admins.php">Manage Admin Users</a></li>
-				<li><a href="logout.php">Logout</a></li>
+				<li><a href="manage_admins">Manage Admin Users</a></li>
+				<li><a href="logout">Logout</a></li>
 			</ul>
 		</div>
 	</div>
