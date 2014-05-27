@@ -13,7 +13,9 @@
 		?>
 	</title>
 	<link rel="stylesheet" src="css/normalize.css" />
-	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<!-- <link rel="stylesheet" href="css/bootstrap.min.css"> -->
+	<!-- <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css"> -->
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/public.css" type="text/css" media="all">
 	<link rel="icon" type="image/x-icon" href="../power-button-2.ico">
 </head>

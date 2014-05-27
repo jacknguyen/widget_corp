@@ -80,6 +80,12 @@
 		}
 
 		$output = '<ul class="nav nav-pills nav-stacked">';
+		if(!$is_public) {
+			$output .= "<li><a href='admin.php'>";
+			$output .= "<span class='glyphicon glyphicon-chevron-left'></span>";
+			$output .= "<strong> Admin Menu</strong>";
+			$output .= "</a></li>";
+		}
 		$subject_set = find_all_subjects($is_public);
 		while($subject = mysqli_fetch_assoc ($subject_set)) {
 			$output .= "<li";
@@ -196,4 +202,33 @@
 		$_SESSION["errors"] = null;
 		return $output;
 	}
+
+	function find_all_admins() {
+		global $connection;
+
+		$query = "SELECT * ";
+		$query .= "FROM admins ";
+		$query .= "ORDER BY user_name ASC";
+		$subject_set = mysqli_query($connection, $query);
+		confirm_query($subject_set);
+		return $subject_set;
+	}
+
+	function find_admin_by_id($admin_id) {
+		global $connection;
+		$safe_admin_id = mysqli_real_escape_string($connection, $admin_id);
+		$query = "SELECT * ";
+		$query .= "FROM admins ";
+		$query .= "WHERE id = {$safe_admin_id} ";
+		$query .= "LIMIT 1";
+		$admin_set = mysqli_query($connection, $query);
+		confirm_query($admin_set);
+
+		if ($admin = mysqli_fetch_assoc($admin_set)) {
+			return $admin;
+		} else {
+			return null;
+		}
+	}
+
 ?>

@@ -14,7 +14,6 @@
 		<?php echo navigation($current_subject, $current_page, false); ?>
 		<br>
 		<a href="new_subject.php" class="btn btn-primary btn-block">Add A New Subject</a>
-
 	</div>
 
 	<div class="col-xs-12 col-md-10" id="page">

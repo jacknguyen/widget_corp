@@ -3,9 +3,11 @@
 			<p class="navbar-text">Copyright <?php echo date('Y'); ?>, Widget Corp.</p>
 		</div>
 	</div>
-
-	<script src="js/jquery-1.11.1.min.js"></script>
+    <script src="js/jquery-1.11.1.min.js"></script>
+    <!--
 	<script src="js/bootstrap.min.js"></script>
+     -->
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
 </body>
 </html>
 
