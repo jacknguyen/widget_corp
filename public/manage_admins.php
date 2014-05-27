@@ -10,10 +10,10 @@
 
 <div class="container-fluid" id="main">
     <div class="col-xs-12 col-md-offset-2 col-md-6" id="page">
-        <?php echo message(); ?>
-        <?php echo errors(); ?>
-        <h2>Manage Admins</h2>
-        <div class="col-md-8">
+        <div class="col-md-7">
+            <?php echo message(); ?>
+            <?php echo errors(); ?>
+            <h2>Manage Admins</h2>
             <table class="table table-hover">
                 <th>Username</th>
                 <th>Actions</th>
@@ -26,7 +26,7 @@
                                 <span class="glyphicon glyphicon-pencil"></span>
                             </a>
                             <a href="delete_admin.php?admin_id=<?php echo $admin["id"]; ?>" class="btn btn-default btn-danger" onclick="return confirm('Are you sure?')">
-                                <span class="glyphicon glyphicon-remove"></span>
+                                <span class="glyphicon glyphicon-trash"></span>
                             </a>
                         </td>
                     </tr>
