@@ -7,9 +7,16 @@
 ?>
 
 <?php $is_public = false; ?>
+<?php confirm_logged_in(); ?>
 <?php include('../inc/layouts/header.php'); ?>
 
-<?php $current_admin = find_admin_by_id($_GET['admin_id']); ?>
+<?php
+    $current_admin = find_admin_by_id($_GET['admin_id']);
+
+    if (!$current_admin) {
+        redirect_to("manage_admins.php");
+    }
+?>
 
 <?php
     if (isset($_POST["submit"])) {
@@ -24,12 +31,12 @@
             // If validation passes Perform Update
             $id = $current_admin["id"];
             $user_name = mysql_prep($_POST["user_name"]);
-            $password = mysql_prep($_POST["password"]);
+            $hashed_password = password_encrypt($_POST["password"]);
 
             // query sent to mysql
             $query = "UPDATE admins SET user_name='{$user_name}' ";
-            if (!empty($password)) {
-                $query .= ", hashed_password='{$password}' ";
+            if (!empty($hashed_password) || null) {
+                $query .= ", hashed_password='{$hashed_password}' ";
             }
             $query .= "WHERE id={$id} LIMIT 1";
             $result = mysqli_query($connection, $query);

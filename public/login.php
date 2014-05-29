@@ -7,7 +7,6 @@
 ?>
 
 <?php $is_public = false; ?>
-<?php confirm_logged_in(); ?>
 <?php include('../inc/layouts/header.php'); ?>
 
 <?php
@@ -16,23 +15,22 @@
         $required_fields = ["user_name", "password"];
         validate_presences($required_fields);
 
-        $fields_with_max_length = ["user_name" => 15];
-        validate_max_lengths($fields_with_max_length);
 
         if(empty($errors)) {
-            // If validation passes Perform Update
-            $user_name = mysql_prep($_POST["user_name"]);
-            $hashed_password = password_encrypt($_POST["password"]);
+            // Attempt Login
+            $username = $_POST['user_name'];
+            $password = $_POST['password'];
 
-            // query sent to mysql
-            $query = "INSERT INTO admins SET user_name='{$user_name}', hashed_password='{$hashed_password}'";
-            $result = mysqli_query($connection, $query);
+            $found_admin = attempt_login($username, $password);
 
-            if ($result) {
-                $_SESSION["message"] = "Admin successfully created.";
-                redirect_to("manage_admins.php");
+            if ($found_admin) {
+                // Success
+                // Mark user as logged in
+                $_SESSION["admin_id"] = $found_admin["id"];
+                $_SESSION["username"] = $found_admin["user_name"];
+                redirect_to("admin");
             } else {
-                $_SESSION['message'] = "Admin creation failed";
+                $_SESSION['message'] = "Login failed";
             }
         }
     } else {
@@ -45,7 +43,6 @@
         <div class="row">
             <div class="col-md-6">
                 <?php echo message(); ?>
-                <?php echo errors(); ?>
                 <?php
                     if (!empty($message)) {
                         echo htmlentities($message);
@@ -56,7 +53,7 @@
         </div>
         <div class="row">
             <div class="col-md-4">
-                <h2>New Admin</h2>
+                <h2>Log In</h2>
 
                 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" role="form">
                     <div class="form-group">
@@ -67,8 +64,7 @@
                         <label for="password">Password</label>
                         <input type="password" class="form-control" id="password" placeholder="Password" name="password">
                     </div>
-                    <button type="submit" class="btn btn-success" name="submit"><span class="glyphicon glyphicon-floppy-disk"></span></button>
-                    <a href="manage_admins.php" class="btn btn-default"><span class="glyphicon glyphicon-remove"></span></a>
+                    <button type="submit" class="btn btn-success btn-block" name="submit"><span class="glyphicon glyphicon-log-in"></span></button>
                 </form>
             </div>
         </div>

@@ -6,6 +6,7 @@
 ?>
 
 <?php $is_public = false; ?>
+<?php confirm_logged_in(); ?>
 <?php include('../inc/layouts/header.php'); ?>
 
 <div class="container-fluid" id="main">
@@ -20,7 +21,7 @@
                 <?php $admins = find_all_admins(); ?>
                 <?php while ($admin = mysqli_fetch_assoc ($admins)) { ?>
                     <tr>
-                        <td><?php echo $admin['user_name']; ?></td>
+                        <td><?php echo htmlentities($admin['user_name']); ?></td>
                         <td>
                             <a href="edit_admin.php?admin_id=<?php echo $admin["id"]; ?>" class="btn btn-default">
                                 <span class="glyphicon glyphicon-pencil"></span>

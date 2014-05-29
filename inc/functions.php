@@ -231,4 +231,90 @@
 		}
 	}
 
+	function find_admin_by_username($admin_username) {
+		global $connection;
+		$safe_admin_username = mysqli_real_escape_string($connection, $admin_username);
+		$query = "SELECT * FROM admins WHERE user_name = '{$safe_admin_username}' LIMIT 1";
+		$admin_set = mysqli_query($connection, $query);
+		confirm_query($admin_set);
+
+		if ($admin = mysqli_fetch_assoc($admin_set)) {
+			return $admin;
+		} else {
+			return null;
+		}
+	}
+
+
+	function password_encrypt ($password) {
+		$hash_format = "$2y$10$";
+		$salt_length = 22;
+		$salt = generate_salt($salt_length);
+		$format_and_salt = $hash_format . $salt;
+		$hash = crypt($password, $format_and_salt);
+
+		return $hash;
+	}
+
+	function generate_salt($length) {
+		// mt_rand to get a random value. uniqid will guarantee to get a unique id
+		// back and true lets it be a little longer to be more secure
+		// which is then passed into the md5 hash
+		$unique_random_string = md5(uniqid(mt_rand(), true));
+
+		// Valid characters for a salt are [a-zA-Z0-9./]
+		$base64_string = base64_encode($unique_random_string);
+
+		// But no '+' which is valid in base64 encoding
+		$modified_base64_string = str_replace('+', '.', $base64_string);
+
+		// Returns the portion of string specified by the start and length parameters.
+		$salt = substr($modified_base64_string, 0, $length);
+
+		return $salt;
+
+		// base64 encoding is NOT a way of encrypting, nor a way of compacting data.
+		// In fact a base64 encoded piece of data is roughly 1.4 to 1.6 times bigger
+		// than the original datapiece. It is only a way to be sure that no data is
+		// lost or modified during the transfer.
+	}
+
+	function password_check($password, $existing_hash) {
+		// taking existing password with existing hash and
+		// pulls format and salt from the beginning and uses that as salt
+		// for current encryption and checks if the current hash is the same
+		// as the hash in the database
+		$hash = crypt($password, $existing_hash);
+		if ($hash === $existing_hash) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	function attempt_login($username, $password) {
+		$admin = find_admin_by_username($username);
+		if ($admin) {
+			// found admin, check password
+			if (password_check($password, $admin['hashed_password'])) {
+				// password matches
+				return $admin;
+			} else {
+				return false;
+			}
+		} else {
+			// admin not found
+			return false;
+		}
+	}
+
+	function logged_in() {
+		return isset($_SESSION['admin_id']);
+	}
+
+	function confirm_logged_in() {
+		if (!isset($_SESSION['admin_id'])) {
+			redirect_to('login');
+		}
+	}
 ?>

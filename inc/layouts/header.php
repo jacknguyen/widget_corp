@@ -23,9 +23,9 @@
 	<div id="header" class="navbar navbar-inverse" role="header">
 		<div class="container-fluid">
 			<div class="navbar-header">
-				<a href="index" class="navbar-brand">Widget Corp <?php if (($is_public == false)) { echo "Admin"; } ?></a>
+				<a href="index" class="navbar-brand">Widget Corp <?php if (($is_public == false && logged_in())) { echo "Admin"; } ?></a>
 			</div>
-			<ul class="nav navbar-nav navbar-right">
+			<ul class="nav navbar-nav">
 				<li><a href='admin'>Admin</a></li>
 			</ul>
 		</div>
